@@ -1,0 +1,56 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+export function getStaticPaths() {
+  const storiesDir = path.join(process.cwd(), "src/content/stories");
+  const files = fs.readdirSync(storiesDir);
+
+  return files
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => ({
+      params: {
+        slug: file.replace(".md", ""),
+      },
+    }));
+}
+
+const { slug } = Astro.params;
+
+const storyModule = await import(
+  `../../content/stories/${slug}.md`
+);
+
+const story = storyModule.frontmatter;
+const Content = storyModule.Content;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{story.title}</title>
+    <meta name="description" content={story.description} />
+  </head>
+
+  <body>
+    <main>
+      <p>
+        <a href="/">← Home</a>
+      </p>
+
+      <article>
+        <h1>{story.title}</h1>
+
+        <p>
+          By {story.author} · {story.publication_date}
+        </p>
+
+        <hr />
+
+        <Content />
+      </article>
+    </main>
+  </body>
+</html>

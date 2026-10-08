@@ -1,16 +1,52 @@
 ---
+const stories = [
+  {
+    title: "My First Story",
+    description:
+      "This is the first story published on the prototype story blog.",
+    slug: "my-first-story",
+  },
+];
 ---
 
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>EcoLiving Stories</title>
+    <meta
+      name="description"
+      content="A simple story publishing prototype."
+    />
+  </head>
+
+  <body>
+    <header>
+      <h1>EcoLiving Stories</h1>
+      <p>Story publishing prototype</p>
+    </header>
+
+    <main>
+      <h2>Latest Stories</h2>
+
+      {
+        stories.map((story) => (
+          <article>
+            <h3>
+              <a href={`/stories/${story.slug}`}>
+                {story.title}
+              </a>
+            </h3>
+
+            <p>{story.description}</p>
+
+            <a href={`/stories/${story.slug}`}>
+              Read Story →
+            </a>
+          </article>
+        ))
+      }
+    </main>
+  </body>
 </html>
