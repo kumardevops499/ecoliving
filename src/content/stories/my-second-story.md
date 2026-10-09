@@ -1,6 +1,6 @@
 
 ---
-title: "The Value of Kindness"
+title: "My Second Story"
 description: "A short test story about kindness and helping others."
 author: "Kumar"
 publication_date: "2026-10-09"
@@ -8,7 +8,7 @@ category: "Inspirational"
 tags:
   - kindness
   - life
-seo_title: "The Value of Kindness | EcoLiving"
+seo_title: "My Second Story | EcoLiving"
 seo_description: "A short story about kindness and helping others."
 ---
 
