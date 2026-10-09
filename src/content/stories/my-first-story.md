@@ -50,8 +50,9 @@ Plants improve air quality, beautify your home, and help create a connection wit
 Share eco-friendly habits with family and friends. Positive change grows faster when communities participate.
 
 Final Thoughts
+
 Eco-friendly living is not about perfection. It is about making better choices consistently. Even one small habit can make a difference when practiced daily.
 
 Start with one or two habits from this list and gradually build a greener lifestyle.
 
-Which eco habit will you start today? Let us know in the comments at Eco Living Hub.
+
