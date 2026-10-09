@@ -1,28 +1,19 @@
+
 ---
-import fs from "node:fs";
-import path from "node:path";
+import { getCollection, render } from 'astro:content';
 
-export function getStaticPaths() {
-  const storiesDir = path.join(process.cwd(), "src/content/stories");
-  const files = fs.readdirSync(storiesDir);
+export async function getStaticPaths() {
+  const stories = await getCollection('stories');
 
-  return files
-    .filter((file) => file.endsWith(".md"))
-    .map((file) => ({
-      params: {
-        slug: file.replace(".md", ""),
-      },
-    }));
+  return stories.map((story) => ({
+    params: { slug: story.id.replace(/\.md$/, '') },
+    props: { story },
+  }));
 }
 
-const { slug } = Astro.params;
-
-const storyModule = await import(
-  `../../content/stories/${slug}.md`
-);
-
-const story = storyModule.frontmatter;
-const Content = storyModule.Content;
+const { story } = Astro.props;
+const { Content } = await render(story);
+const data = story.data;
 ---
 
 <!doctype html>
@@ -30,8 +21,11 @@ const Content = storyModule.Content;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{story.title}</title>
-    <meta name="description" content={story.description} />
+    <title>{data.seo_title ?? data.title}</title>
+    <meta
+      name="description"
+      content={data.seo_description ?? data.description}
+    />
   </head>
 
   <body>
@@ -41,10 +35,12 @@ const Content = storyModule.Content;
       </p>
 
       <article>
-        <h1>{story.title}</h1>
+        <h1>{data.title}</h1>
 
         <p>
-          By {story.author} · {story.publication_date}
+          {data.author && `By ${data.author}`}
+          {data.author && data.publication_date && ' · '}
+          {data.publication_date}
         </p>
 
         <hr />

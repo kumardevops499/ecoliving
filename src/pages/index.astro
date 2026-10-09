@@ -1,12 +1,14 @@
+
 ---
-const stories = [
-  {
-    title: "My First Story",
-    description:
-      "This is the first story published on the prototype story blog.",
-    slug: "my-first-story",
-  },
-];
+import { getCollection } from 'astro:content';
+
+const stories = await getCollection('stories');
+
+stories.sort((a, b) => {
+  const dateA = a.data.publication_date ?? '';
+  const dateB = b.data.publication_date ?? '';
+  return dateB.localeCompare(dateA);
+});
 ---
 
 <!doctype html>
@@ -17,7 +19,7 @@ const stories = [
     <title>EcoLiving Stories</title>
     <meta
       name="description"
-      content="A simple story publishing prototype."
+      content="Read inspirational stories on EcoLiving Stories."
     />
   </head>
 
@@ -34,19 +36,21 @@ const stories = [
         stories.map((story) => (
           <article>
             <h3>
-              <a href={`/stories/${story.slug}`}>
-                {story.title}
+              <a href={`/stories/${story.id}/`}>
+                {story.data.title}
               </a>
             </h3>
 
-            <p>{story.description}</p>
+            <p>{story.data.description}</p>
 
-            <a href={`/stories/${story.slug}`}>
+            <a href={`/stories/${story.id}/`}>
               Read Story →
             </a>
           </article>
         ))
       }
+
+      {stories.length === 0 && <p>No stories published yet.</p>}
     </main>
   </body>
 </html>
